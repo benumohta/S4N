@@ -106,7 +106,7 @@ app.get("/login", function (req, res) {
 });
 
 app.get('/members',  AuthenticatedOrNot, function(req, res){
-  // console.log("Inside Members");
+     console.log("Inside Members");
   // console.log(req.user);
   var Message = {"userdata":req.user, message:"mebers area only"};
   // console.log(Message);
