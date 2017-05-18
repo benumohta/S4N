@@ -1,4 +1,4 @@
-  <div class="alert alert-danger" ng-show="page_load_error"> {{ page_load_error }} </div>
+  <div class="alert alert-danger" ng-show="page_load_error"> <h4 style="color: #aaaaaa">{{ failuremessage }}</h4></div>
   <div ng-show="!finished_loading"><h4 style="color: #aaaaaa"> login ... please wait a moment </h4></div>
 
   <div class="panel panel-default" ng-show="!loggedIn">
@@ -6,7 +6,7 @@
   <div class="panel-heading">
     <input type="text" placeholder="Username" size="30" ng-model="user.username"/>
     <div class="recipename" >
-      <input type="password" placeholder="Password" size="30" ng-model="user.password"/>
+      <input type="password" placeholder="enter password" size="30" ng-model="user.password"/>
     </div>
   </div>
   <div class="panel-body">
@@ -16,4 +16,12 @@
   <div class="panel panel-default" ng-show="loggedIn">
       <div class="panel-heading">User logged in successful</a></div>
       <div class="panel-body">{{ user.username }}</div>
+      <div class="panel-body">{{ successmessage }}</div>
+      <div class="panel-heading">
+      <h3 style="margin-top: 50px">User Profile</h3>
+    </div>
+        <div class="panel-body">id: {{UserId}}</div>
+        <div class="panel-body">username: {{username}}</div>
+        <div class="panel-body">password: {{password}}</div>
+
   </div>

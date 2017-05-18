@@ -5,19 +5,29 @@
       $scope.finished_loading =  true;
       $scope.loggedIn = false;
 
-      $scope.login = function (user){
+      $scope.login = function(user){
+        $scope.page_load_error = false;
         $scope.finished_loading =  false;
-        loginProvider.loginUser(user,(err,results)=>{
-          console.log(err);
+        $scope.loggedIn = false;
+        loginProvider.loginUser(user,(err,result)=>{
           if(err){
+            $scope.page_load_error = true;
+            //console.log("Inside Err");
+          //  console.log(err);
             $scope.finished_loading =  true;
-          }
-          else{
+            $scope.failuremessage = err.message;
+          }else{
             $scope.finished_loading =  true;
             $scope.loggedIn = true;
+            //console.log(result.message);
+            $scope.successmessage = result.message;
+            $scope.UserId   = result.userdata.id;
+            $scope.username = result.userdata.username;
+            $scope.password = result.userdata.password;
           }
         });
       };
-}
+
+    }
     S4NApp.controller("loginController", ['$scope','loginProvider',loginController]);
 })();
