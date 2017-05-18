@@ -4,11 +4,13 @@
       $scope.page_load_error = null;
       $scope.finished_loading =  true;
       $scope.loggedIn = false;
+      $scope.loggedOut = false;
 
       $scope.login = function(user){
         $scope.page_load_error = false;
         $scope.finished_loading =  false;
         $scope.loggedIn = false;
+        $scope.loggedOut = false;
         loginProvider.loginUser(user,(err,result)=>{
           if(err){
             $scope.page_load_error = true;
@@ -28,6 +30,22 @@
         });
       };
 
+      $scope.logout = function(user){
+      loginProvider.logoutUser(user,(err,result)=>{
+        if(err){
+          $scope.page_load_error = true;
+          $scope.finished_loading =  true;
+          $scope.loggedIn = false;
+          $scope.loggedOut = false;
+        }else{
+          $scope.page_load_error = false;
+          $scope.finished_loading =  true;
+          $scope.loggedIn = false;
+          $scope.loggedOut = true;
+          $scope.successmessage =  "User logged out successfully";
+        }
+      });
+      };
     }
     S4NApp.controller("loginController", ['$scope','loginProvider',loginController]);
 })();

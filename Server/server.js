@@ -30,9 +30,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// var userCol = dbconfig.UserCol;
-var MasterUser ={};
-
 /*var users= {
   "id123":{id: 123 , username: "test1" , password: "cat"},
   "id1": {id: 1, username: "admin", password: "admin"}
@@ -51,8 +48,6 @@ passport.use(new passportLocal(function(username, password, done){
       if(!results[0]){
         return done (null, false,{message: "User Not found"});
       }else if(results[0].password == password){
-        var id = "id"+results[0].id;
-        MasterUser =  {[id] : results[0]};
         // console.log(MasterUser);
         return done(null, results[0]);
       }else{
@@ -64,24 +59,24 @@ passport.use(new passportLocal(function(username, password, done){
 
 //serialize
 passport.serializeUser(function(user,done){
-  // console.log("Inside Serialize");
-  if (MasterUser["id"+user.id]){
-    done(null, "id"+user.id);
-  }else{
-    done(new Error("CANT_SERIALIZE_USER"));
-  }
+
+    done(null, user.id);
+
 });
 
 //deserialize
 
 passport.deserializeUser(function(userid,done){
-  // console.log("Inside DeSerialize");
-  if (MasterUser[userid]){
-    done(null, MasterUser[userid]);
-  }else{
-    done(new Error("User_DOESNT_EXIST"));
-  }
-});
+  dbHandler.findUserById(userid,(err, results)=>{
+    if(err){
+      done(err,null);
+    }else{
+      done(null,results[0]);
+    }
+  });
+
+}
+);
 
 
 
@@ -90,9 +85,7 @@ app.post("/login", passport.authenticate('local',{
   failureRedirect: '/login',
   successFlash: {message: "Welcome back"},
   failureFlash: true
-}), function(req,res){
-  res.cookie(req);
-});
+}));
 
 
 app.get("/login", function (req, res) {
@@ -100,13 +93,16 @@ app.get("/login", function (req, res) {
     var Message;
     if (error && error.length) {
       Message = {message:error[0]};
-    }
       res.writeHead(500, { "Content-Type" : "application/json" });
-    res.end(JSON.stringify(Message));
+    }else{
+      res.writeHead(200, { "Content-Type" : "application/json" });
+    }
+      res.end(JSON.stringify(Message));
 });
 
 app.get('/members',  AuthenticatedOrNot, function(req, res){
      console.log("Inside Members");
+     console.log(req.session);
   // console.log(req.user);
   var Message = {"userdata":req.user, message:"mebers area only"};
   // console.log(Message);
@@ -127,7 +123,16 @@ dbHandler.insertdb(req.body, function(err,results){
     res.end(JSON.stringify({Result:"Data Insterted Succcessfully"}));
   }
 });
+});
 
+app.get("/service/logout", function(req,res){
+  console.log("Inside Logout");
+  console.log(req.body);
+  console.log(req.user);
+  if(req.user){
+    req.logout();
+  }
+  res.redirect("/login");
 });
 
 app.get("/users", function(req,res){
@@ -162,7 +167,6 @@ function AuthenticatedOrNot(req, res, next){
     res.redirect("/login");
   }
 }
-
 
 dbconfig.initdb(function(err,data){
 if(err){

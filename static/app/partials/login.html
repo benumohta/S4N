@@ -1,4 +1,5 @@
   <div class="alert alert-danger" ng-show="page_load_error"> <h4 style="color: #aaaaaa">{{ failuremessage }}</h4></div>
+  <div class="alert alert-success" ng-show="loggedOut"> <h4 style="color: #aaaaaa">{{ successmessage }}</h4></div>
   <div ng-show="!finished_loading"><h4 style="color: #aaaaaa"> login ... please wait a moment </h4></div>
 
   <div class="panel panel-default" ng-show="!loggedIn">
@@ -23,5 +24,5 @@
         <div class="panel-body">id: {{UserId}}</div>
         <div class="panel-body">username: {{username}}</div>
         <div class="panel-body">password: {{password}}</div>
-
+    <div class="panel-body"><a href ng-click="logout(user)">logout</a></div>
   </div>

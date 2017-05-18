@@ -57,4 +57,18 @@ exports.findUser = function(username,callback){
       }
     });
 };
-exports.user = null;
+
+
+exports.findUserById = function(userid,callback){
+    dbconfig.UserCol.find({id:userid}).toArray((err,data)=>{
+      // err= "Error Occured";
+      if(err){
+        // console.log("Inside DB Err");
+        callback(err,null);
+      }
+      else {
+        // console.log("Inside DB success");
+        callback(null,data);
+      }
+    });
+};
