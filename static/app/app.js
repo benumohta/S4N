@@ -8,5 +8,7 @@ S4NApp.config(function ($routeProvider) {
                            templateUrl:"app/partials/404.html"})
       .when("/",{redirectTo:"/loginapp"})
       .when("/login",{redirectTo:"/loginapp"})
+      .when("/register",{controller:"registerController",
+                         templateUrl:"app/partials/register.html"})
       .otherwise({redirectTo:"/404_page"})
 });

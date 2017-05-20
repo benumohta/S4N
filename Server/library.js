@@ -14,3 +14,6 @@ exports.send_success = function(res, data) {
     var output = { error: null, data: data };
     res.end(JSON.stringify(output) + "\n");
 }
+exports.now_in_s = function() {
+    return Math.round((new Date()).getTime() / 1000);
+}

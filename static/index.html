@@ -1,14 +1,19 @@
-<html ng-app="S4N">
+<html >
 <head>
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type='text/javascript' src="js/angular.min.js"></script>
   <script type='text/javascript' src="js/angular-route.min.js"></script>
 </head>
-<body>
+<body ng-app="S4N" class="container" style="margin-top: 50px" >
+<div class="panel panel-muted"><h2><span class="text-primary">Welcome to S4N</span></h2></div>
 <div  id="content" ng-view></div>
 <script type='text/javascript' src="app/app.js"></script>
 <script type='text/javascript' src="app/controllers/loginController.js"></script>
 <script type='text/javascript' src="app/services/loginService.js"></script>
+<script type='text/javascript' src="app/controllers/registerController.js"></script>
+<script type='text/javascript' src="app/services/registerProvider.js"></script>
 </body>
 </html>

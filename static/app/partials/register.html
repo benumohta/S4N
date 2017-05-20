@@ -1,0 +1,69 @@
+<form class="form-horizontal" name="registerForm" ng-submit="submit()">
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="username">Email:</label>
+    <div class="col-sm-6">
+      <input type="email" class="form-control" name="email" id="email"
+      placeholder="Enter Email" ng-model="user.email" required>
+      <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.email.$error.required"></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="pwd">Password:</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" id="pwd" name="password"
+      placeholder="Enter password" ng-model="user.password" required>
+      <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.password.$error.required"></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="dname">Diplay Name:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="dname" name="dname"
+      placeholder="Enter Display Name" ng-model="user.display_name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="cname">Company Name:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="cname" name="cname"
+      placeholder="Enter Company Name" ng-model="user.compnayName" required>
+      <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="registerForm.cname.$error.required"></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="add1">Address Line 1:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="add1" placeholder="Address Line 1" ng-model="user.addressLine1" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="add2">Address Line 2:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="add2" placeholder="Address Line 2" ng-model="user.addressLine2" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="city">City:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="city" placeholder="City" ng-model="user.city" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="state">State:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="state" placeholder="State" ng-model="user.state" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="pincode">pincode:</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="pincode" placeholder="Pincode" ng-model="user.pincode " required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-default" onsubmit="">Submit</button>
+    </div>
+  </div>
+</form>

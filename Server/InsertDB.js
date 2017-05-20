@@ -1,23 +1,44 @@
-var
-dbconfig= require('./db.js');
+var dbconfig= require('./db.js'),
+    lib = require("./library.js"),
+    async = require("async"),
+    bcrypt = require('bcrypt');
 
 
 var users = [];
 var user;
-/*var users= {
-  "id123":{id: 123 , username: "test1" , password: "cat"},
-  "id1": {id: 1, username: "admin", password: "admin"}
-};*/
 
 exports.insertdb = function(users, callback){
-    dbconfig.UserCol.insertOne(users,function(err,results){
-      if(err){
-        callback(err,null);
-      }else{
-        callback(null,results);
-      }
-    });
 
+    async.waterfall([
+      function(cb){
+        bcrypt.hash(users.password, 10, cb);
+      },
+      function insertUser(hash,cb){
+
+        var write = {
+            email_address: users.email,
+            display_name: users.display_name,
+            password: hash,
+            first_seen_date: lib.now_in_s(),
+            last_modified_date: lib.now_in_s(),
+            deleted: false,
+            addressLine1 : users.addressLine1,
+            addressLine2 : users.addressLine2,
+            city : users.city,
+            compnayName : users.compnayName,
+            state:users.state,
+            pincode:users.pincode
+        };
+        dbconfig.UserCol.insertOne(write,cb)
+      }
+    ],
+      function(err,results){
+        if(err){
+          callback(err,null);
+        }else{
+          callback(null,results);
+        }
+    });
 };
 
 exports.getUsers = function(callback){
@@ -45,7 +66,7 @@ exports.users = null;
 
 
 exports.findUser = function(username,callback){
-    dbconfig.UserCol.find({username:username}).toArray((err,data)=>{
+    dbconfig.UserCol.find({email_address:username}).toArray((err,data)=>{
       // err= "Error Occured";
       if(err){
         console.log("Inside DB Err");

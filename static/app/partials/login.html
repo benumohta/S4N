@@ -1,19 +1,62 @@
   <div class="alert alert-danger" ng-show="page_load_error"> <h4 style="color: #aaaaaa">{{ failuremessage }}</h4></div>
-  <div class="alert alert-success" ng-show="loggedOut"> <h4 style="color: #aaaaaa">{{ successmessage }}</h4></div>
+  <div class="alert alert-success alert-dismissable" ng-show="loggedOut">
+      <h4 style="color: #aaaaaa">{{ successmessage }}</h4>
+  </div>
   <div ng-show="!finished_loading"><h4 style="color: #aaaaaa"> login ... please wait a moment </h4></div>
+  <div class="form-horizontal" ng-show="!loggedIn" style="margin-top: 50px, padding-left:20px" ng-init="isUserLoggedIn()">
 
-  <div class="panel panel-default" ng-show="!loggedIn">
-    <h3 style="margin-top: 50px">Login</h3>
-  <div class="panel-heading">
-    <input type="text" placeholder="Username" size="30" ng-model="user.username"/>
-    <div class="recipename" >
-      <input type="password" placeholder="enter password" size="30" ng-model="user.password"/>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Username:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" placeholder="Enter username" ng-model="user.username" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" ng-model="user.password" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label><input type="checkbox"> Remember me</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button ng-click="login(user)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-user"></span> Login</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+          <label><a href ng-href="#/register"><b>Register</b></label>&nbsp;
+          <label><a href ng-href="#/register"><b>Forgot Password</b></label>
+      </div>
     </div>
   </div>
-  <div class="panel-body">
-    <button ng-click="login(user)" type="button" class="btn btn-success">Login</button>
-  </div>
-  </div>
+
+
+
+  <!--<div class="panel panel-default" ng-show="!loggedIn" style="margin-top: 50px, padding-left:20px" ng-init="isUserLoggedIn()">
+    <div class="panel-heading">
+      <h3>Login</h3>
+      <div style="margin-top:10px">
+        <input type="text" placeholder="Username" size="30" ng-model="user.username"/>
+      </div>
+      <div style="margin-top:10px">
+        <input type="password" placeholder="Password" size="30" ng-model="user.password"/>
+      </div>
+      <div style="margin-top:10px">
+        <button ng-click="login(user)" type="button" class="btn btn-success"><span class="glyphicon glyphicon-user"></span> Login</button>
+      </div>
+    </div>
+    <div class="panel-body"  style="margin-top:10px">
+        <a href ng-href="#/register" class="">
+    </div>
+  </div>-->
+
   <div class="panel panel-default" ng-show="loggedIn">
       <div class="panel-heading">User logged in successful</a></div>
       <div class="panel-body">{{ user.username }}</div>
