@@ -13,15 +13,12 @@
       }
     };
 
-      $scope.login = function(user){
-
+      $scope.login = function(){
         $scope.page_load_error = false;
         $scope.finished_loading =  false;
         $scope.loggedIn = false;
         $scope.loggedOut = false;
-        $scope.user = {};
-
-        loginProvider.loginUser(user,(err,result)=>{
+        loginProvider.loginUser($scope.user,(err,result)=>{
           if(err){
             $scope.page_load_error = true;
             $scope.finished_loading =  true;

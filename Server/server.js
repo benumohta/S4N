@@ -8,7 +8,8 @@ var express = require('express'),
     flash = require('express-flash'),
     dbHandler= require('./InsertDB.js'),
     lib=require('./library.js'),
-    dbconfig= require('./db.js');
+    dbconfig= require('./db.js'),
+    bcrypt = require('bcrypt');
 
 
 
@@ -30,25 +31,59 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-passport.use(new passportLocal(function(username, password, done){
+passport.use(new passportLocal(
+  {
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(username,password, done){
   dbHandler.findUser(username,(err, results)=>{
      if (err){
       return done (null, false,{message: "DB error"});
-    }else {
+    }
+    else {
       if(!results[0]){
         return done (null, false,{message: "User Not found"});
-      }else if(results[0].password == password){
-        return done(null, results[0]);
-      }else{
-        return done (null, false,{message: "Incorrect Credential"});
+      }
+      else
+      {
+          bcrypt.compare(password, results[0].password, (err,comresult)=>{
+          if(err){
+            return done (null, false,{message: "Sign on Failure. Try again Later"});
+          }
+          else {
+            if(comresult){
+              return done(null, results[0]);
+            }else {
+              return done (null, false,{message: "Incorrect Credentials"});
+            }
+          }
+        });
       }
     }
   });
 }));
+/*
+bcrypt.hash(, 10,(err,hash)=>{
+  if(err){
+    return done (null, false,{message: "Error in hasing password"});
+  }
+  else {
 
+    if(results[0].password == hash)
+    {
+      return done(null, results[0]);
+    }
+    else
+    {
+
+    }
+  }
+});
+*/
 //serialize
 passport.serializeUser(function(user,done){
-    done(null, user.id);
+    done(null, user._id);
 });
 
 //deserialize
@@ -69,7 +104,17 @@ app.post("/login", passport.authenticate('local',{
   failureRedirect: '/login',
   successFlash: {message: "Welcome back"},
   failureFlash: true
-}));
+})
+);
+
+/*app.post("/login",
+function(req,res){
+  console.log(req.body);
+  var Message = {message: "Incorrect Credential"};
+  res.writeHead(500, { "Content-Type" : "application/json" });
+  res.end(JSON.stringify(Message));
+}
+);*/
 
 
 app.get("/login", function (req, res) {

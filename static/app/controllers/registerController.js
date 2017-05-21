@@ -9,7 +9,7 @@
           }
           else{
             var host = $window.location.host;
-            var landingUrl = "http://" + host + "/loginapp";
+            var landingUrl = "http://" + host + "/#";
             alert(landingUrl);
             $window.location.href = landingUrl;
           }

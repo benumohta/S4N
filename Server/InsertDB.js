@@ -1,11 +1,11 @@
 var dbconfig= require('./db.js'),
     lib = require("./library.js"),
     async = require("async"),
-    bcrypt = require('bcrypt');
+    bcrypt = require('bcrypt')
+    monogoObjId =  require('mongodb').ObjectId;
 
 
 var users = [];
-var user;
 
 exports.insertdb = function(users, callback){
 
@@ -65,8 +65,8 @@ exports.getUsers = function(callback){
 exports.users = null;
 
 
-exports.findUser = function(username,callback){
-    dbconfig.UserCol.find({email_address:username}).toArray((err,data)=>{
+exports.findUser = function(email,callback){
+    dbconfig.UserCol.find({email_address:email}).toArray((err,data)=>{
       // err= "Error Occured";
       if(err){
         console.log("Inside DB Err");
@@ -81,7 +81,8 @@ exports.findUser = function(username,callback){
 
 
 exports.findUserById = function(userid,callback){
-    dbconfig.UserCol.find({id:userid}).toArray((err,data)=>{
+    var objId = new monogoObjId(userid);
+    dbconfig.UserCol.find({_id:objId}).toArray((err,data)=>{
       // err= "Error Occured";
       if(err){
         // console.log("Inside DB Err");
