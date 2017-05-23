@@ -175,6 +175,22 @@ app.post("/user", function(req,res){
   });
 });
 
+app.post("/validateUser", function(req,res){
+  dbHandler.findUser(req.body.email,(err, results)=>{
+     if (err){
+      lib.send_failure(res,500,err);
+    }else {
+      if (results[0].email_address){
+
+          var err ={ code: "User_already_exists",
+                 message: "the email is already registered. Try with a different email" }
+          lib.send_failure(res,500,err);
+      }else{
+          lib.send_success(res,results);
+      }
+    }
+  });
+});
 
 function AuthenticatedOrNot(req, res, next){
   if (req.isAuthenticated()){

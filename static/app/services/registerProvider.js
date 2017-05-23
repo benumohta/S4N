@@ -12,6 +12,16 @@
     });
   };
 
+  this.validateUser = function(user,callback){
+    $http.post(this._server_host+"/validateUser",user)
+    .success(function (data, status, headers, conf) {
+        callback(null, data);
+    })
+    .error(function (data, status, headers, conf) {
+        callback(data,null);
+    });
+  };
+
   }
   S4NApp.service("registerProvider",["$http", registerProvider]);
 })();

@@ -27,7 +27,8 @@ exports.insertdb = function(users, callback){
             city : users.city,
             compnayName : users.compnayName,
             state:users.state,
-            pincode:users.pincode
+            pincode:users.pincode,
+            phonenum:users.phone
         };
         dbconfig.UserCol.insertOne(write,cb)
       }
